@@ -1,6 +1,7 @@
 package com.qq.code.controller;
 
 
+import com.qq.code.common.ApiResponse;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -11,8 +12,9 @@ public class TestController {
 
 
     @RequestMapping("/a")
-    public String hello(){
-        return "hello |QQ";
+    public ApiResponse<String> hello(){
+        String s = "老子天下无敌！";
+        return ApiResponse.success(s);
     }
 
 

@@ -10,3 +10,9 @@ spring:
       minimum-idle: 10
       maximum-pool-size: 40
       auto-commit: true
+
+jwt:
+  secret: VKKyKYs5ciPr70qepij8XokSbyXpi8O14TLTZveb4Tk=
+  expiration: 3600000
+  header: Authorization
+  prefix: Bearer
