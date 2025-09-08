@@ -1,6 +1,7 @@
 package com.qq.code.repository;
 
 import com.qq.code.entity.User;
+import com.qq.code.vo.LoginVO;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

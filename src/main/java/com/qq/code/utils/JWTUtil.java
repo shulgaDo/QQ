@@ -13,6 +13,7 @@ import org.springframework.stereotype.Component;
 import javax.crypto.SecretKey;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Map;
 
 @Component
 public class JWTUtil {
@@ -45,6 +46,23 @@ public class JWTUtil {
                 .signWith(secretKey, SignatureAlgorithm.ES256)
                 .compact();
 
+    }
+
+    /**
+     * 通过账号生成JWT token
+      * @param account
+     * @return
+     */
+    public String generateToken(String account){
+        Map<String,Object> chaims = new HashMap<>();
+        chaims.put("account",account);
+
+       return Jwts.builder()
+               .setClaims(chaims)
+               .setSubject(account)
+               .setExpiration(new Date(System.currentTimeMillis() + jwtProperties.getExpiration()))
+               .signWith(secretKey,SignatureAlgorithm.HS256)
+               .compact();
     }
 
     /**

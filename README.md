@@ -20,5 +20,19 @@
 * device(设备名称)
 * update_at(更新时间)
 
+## API接口设计
+
+1. 用户登陆接口(`/api/user/login`)  
+    **请求参数**
+    - ***account***:用户账号(必填)
+    - ***password***:用户密码(必填)
+
+    **请求方式**
+    `POST`
+
+    **返回值**
+    - ***UserDTO***:用户账号信息
+2. 用户登出接口(`/api/user/logout`)
+
 
 
