@@ -7,6 +7,7 @@ import com.qq.code.service.UserService;
 import com.qq.code.vo.LoginVO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -26,8 +27,8 @@ public class UserController {
      */
     @PostMapping("/login")
     @Operation(summary = "user login",description = "user input account and password to login QQ")
-    public ApiResponse<UserDTO> login(@Valid @RequestBody LoginVO loginVO){
-        UserDTO userDTO = userService.login(loginVO);
+    public ApiResponse<UserDTO> login(@Valid @RequestBody LoginVO loginVO, HttpServletRequest request){
+        UserDTO userDTO = userService.login(loginVO,request);
         return ApiResponse.success(userDTO);
     }
 

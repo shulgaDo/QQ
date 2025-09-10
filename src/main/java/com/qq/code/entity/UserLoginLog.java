@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.Instant;
+import java.time.LocalDateTime;
 
 
 @Entity
@@ -22,13 +23,13 @@ public class UserLoginLog {
     private String ipAddress;
 
     @Column(name = "login_time")
-    private Instant loginTime;
+    private LocalDateTime loginTime;
 
     @Column(name = "status")
     private Boolean status;
 
     @Column(name = "update_at")
-    private Instant updateAt;
+    private LocalDateTime updateAt;
 
     public Long getId() {
         return id;
@@ -54,13 +55,7 @@ public class UserLoginLog {
         this.ipAddress = ipAddress;
     }
 
-    public Instant getLoginTime() {
-        return loginTime;
-    }
 
-    public void setLoginTime(Instant loginTime) {
-        this.loginTime = loginTime;
-    }
 
     public Boolean getStatus() {
         return status;
@@ -70,11 +65,19 @@ public class UserLoginLog {
         this.status = status;
     }
 
-    public Instant getUpdateAt() {
+    public LocalDateTime getLoginTime() {
+        return loginTime;
+    }
+
+    public void setLoginTime(LocalDateTime loginTime) {
+        this.loginTime = loginTime;
+    }
+
+    public LocalDateTime getUpdateAt() {
         return updateAt;
     }
 
-    public void setUpdateAt(Instant updateAt) {
+    public void setUpdateAt(LocalDateTime updateAt) {
         this.updateAt = updateAt;
     }
 }
