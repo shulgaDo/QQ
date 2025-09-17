@@ -36,6 +36,9 @@
 * email(邮箱)
 * personal_statement(个人说明)
 * update_at(更新时间)
+* birth_day(出生日期)
+* birth_month(出生月份)
+* birth_year(出生年份)
 
 ## info_photo(精选照片表)
 

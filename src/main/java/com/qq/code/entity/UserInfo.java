@@ -67,6 +67,39 @@ public class UserInfo {
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime updateAt;
 
+    @Column(name = "birth_year")
+    private Integer birthYear;
+
+    @Column(name = "birth_day")
+    private Integer birthDay;
+
+    @Column(name = "birth_month")
+    private Integer birthMonth;
+
+    public Integer getBirthMonth() {
+        return birthMonth;
+    }
+
+    public void setBirthMonth(Integer birthMonth) {
+        this.birthMonth = birthMonth;
+    }
+
+    public Integer getBirthDay() {
+        return birthDay;
+    }
+
+    public void setBirthDay(Integer birthDay) {
+        this.birthDay = birthDay;
+    }
+
+    public Integer getBirthYear() {
+        return birthYear;
+    }
+
+    public void setBirthYear(Integer birthYear) {
+        this.birthYear = birthYear;
+    }
+
     public Long getId() {
         return id;
     }

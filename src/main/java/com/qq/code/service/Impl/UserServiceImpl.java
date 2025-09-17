@@ -43,6 +43,7 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+
     @Override
     public UserDTO login(LoginVO loginVO,HttpServletRequest request) {
         Optional<User> optionalUser = userRepository.findByUsername(loginVO.getAccount());
@@ -61,7 +62,6 @@ public class UserServiceImpl implements UserService {
         UserDTO userDTO = modelMapper.map(user, UserDTO.class);
         userDTO.setLoginAt(LocalDateTime.now());
         userDTO.setToken(token);
-        UserContext.setUser(user);
         return userDTO;
     }
 

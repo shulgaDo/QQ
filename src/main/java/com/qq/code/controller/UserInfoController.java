@@ -1,5 +1,6 @@
 package com.qq.code.controller;
 
+import com.google.protobuf.Api;
 import com.qq.code.common.ApiResponse;
 import com.qq.code.dto.UserInfoDTO;
 import com.qq.code.service.InfoPhotoService;
@@ -28,7 +29,8 @@ public class UserInfoController {
     @Operation(summary = "show user information",description = "user click update information button,and show user info")
     @GetMapping("/show")
     public ApiResponse<UserInfoVO> info(){
-
+        UserInfoVO userInfoVO = userInfoService.getUserInfo();
+        return ApiResponse.success(userInfoVO);
     }
 
     /**
@@ -38,7 +40,8 @@ public class UserInfoController {
     @Operation(summary = "show user cover info",description = "show user's cover personal inforamtion")
     @GetMapping("/show/cover")
     public ApiResponse<CoverInfoVO> coverInfo(){
-
+        CoverInfoVO coverInfoVO = userInfoService.getCoverInfo();
+        return ApiResponse.success(coverInfoVO);
     }
 
     /**
@@ -47,9 +50,14 @@ public class UserInfoController {
      * @return
      */
     @Operation(summary = "update user information",description = "update user information")
-    @PostMapping("/update")
-    public ApiResponse<UserInfoDTO> update(@RequestBody @Valid UserInfoVO userInfoVO){
-
+    @PatchMapping("/update")
+    public ApiResponse<UserInfoDTO> updateUserInfo(@RequestBody @Valid UserInfoVO userInfoVO){
+        UserInfoDTO userInfoDTO = userInfoService.updateUserInfo(userInfoVO);
+        return ApiResponse.success(userInfoDTO);
     }
+
+    //TODO 添加大学
+
+    //TODO 添加中学或小学
 
 }

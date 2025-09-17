@@ -24,7 +24,7 @@ public class CoverInfoVO {
 
     private String account;
 
-    private char gender;
+    private String gender;
 
     private String signature;
 
@@ -110,11 +110,11 @@ public class CoverInfoVO {
         this.account = account;
     }
 
-    public char getGender() {
+    public String getGender() {
         return gender;
     }
 
-    public void setGender(char gender) {
+    public void setGender(String gender) {
         this.gender = gender;
     }
 

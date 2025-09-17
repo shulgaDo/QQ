@@ -1,5 +1,6 @@
 package com.qq.code.service.Impl;
 
+import com.qq.code.config.spring.CustomUserDetails;
 import com.qq.code.entity.User;
 import com.qq.code.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,10 +19,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException("User not exist :" + username));
-        return org.springframework.security.core.userdetails.User.builder()
-                .username(user.getAccount())
-                .password(user.getPassword())
-                .authorities("admin")
-                .build();
+        return new CustomUserDetails(user);
     }
 }

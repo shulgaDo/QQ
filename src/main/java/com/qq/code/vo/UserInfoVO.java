@@ -6,7 +6,7 @@ public class UserInfoVO {
 
     private String nickname;
 
-    private char gender;
+    private String gender;
 
     private int photosNumber;
 
@@ -38,11 +38,11 @@ public class UserInfoVO {
         this.nickname = nickname;
     }
 
-    public char getGender() {
+    public String getGender() {
         return gender;
     }
 
-    public void setGender(char gender) {
+    public void setGender(String gender) {
         this.gender = gender;
     }
 

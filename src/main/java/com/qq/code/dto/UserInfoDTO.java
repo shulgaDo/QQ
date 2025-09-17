@@ -30,7 +30,7 @@ public class UserInfoDTO {
 
     private String personalStatement;// 个人说明
 
-    private String zodiacSign;       // 星座（如果要展示）
+//    private String zodiacSign;       // 星座（如果要展示）
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime updateAt;  // 更新时间
@@ -131,13 +131,13 @@ public class UserInfoDTO {
         this.personalStatement = personalStatement;
     }
 
-    public String getZodiacSign() {
-        return zodiacSign;
-    }
-
-    public void setZodiacSign(String zodiacSign) {
-        this.zodiacSign = zodiacSign;
-    }
+//    public String getZodiacSign() {
+//        return zodiacSign;
+//    }
+//
+//    public void setZodiacSign(String zodiacSign) {
+//        this.zodiacSign = zodiacSign;
+//    }
 
     public LocalDateTime getUpdateAt() {
         return updateAt;

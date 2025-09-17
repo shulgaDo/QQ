@@ -1,21 +1,23 @@
 package com.qq.code.common;
 
 import com.qq.code.entity.User;
+import org.springframework.stereotype.Component;
 
+@Component
 public class UserContext {
 
-    private static final ThreadLocal<User> USER = new ThreadLocal<>();
+    private static final ThreadLocal<User> User = new ThreadLocal<>();
 
-    public static void setUser(User user){
-        USER.set(user);
+    public void setUser(User user){
+        User.set(user);
     }
 
     public static User getUser(){
-        return USER.get();
+        return User.get();
     }
 
     public static void clear(){
-        USER.remove();
+        User.remove();
     }
 
 }
