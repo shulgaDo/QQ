@@ -2,10 +2,15 @@ package com.qq.code.controller;
 
 import com.google.protobuf.Api;
 import com.qq.code.common.ApiResponse;
+import com.qq.code.dto.SchoolDTO;
+import com.qq.code.dto.UniversityDTO;
 import com.qq.code.dto.UserInfoDTO;
 import com.qq.code.service.InfoPhotoService;
+import com.qq.code.service.SchoolService;
 import com.qq.code.service.UserInfoService;
 import com.qq.code.vo.CoverInfoVO;
+import com.qq.code.vo.SchoolVO;
+import com.qq.code.vo.UniversityVO;
 import com.qq.code.vo.UserInfoVO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -21,6 +26,8 @@ public class UserInfoController {
     @Autowired
     private UserInfoService userInfoService;
 
+    @Autowired
+    private SchoolService schoolService;
 
     /**
      * 用户信息
@@ -56,8 +63,23 @@ public class UserInfoController {
         return ApiResponse.success(userInfoDTO);
     }
 
-    //TODO 添加大学
+    /**
+     * 添加大学
+     * @param universityVO
+     * @return
+     */
+   @Operation(summary = "add university",description = "user save university information")
+   @PostMapping("/university")
+    public ApiResponse saveUniversity(@RequestBody @Valid UniversityVO universityVO){
+        UniversityDTO universityDTO = schoolService.saveUniversity(universityVO);
+        return ApiResponse.success(universityDTO);
+    }
 
-    //TODO 添加中学或小学
 
+    @Operation(summary = "save school", description = "user save school")
+    @PostMapping("/school")
+    public ApiResponse saveSchool(@RequestBody @Valid SchoolVO schoolVO){
+        SchoolDTO schoolDTO = schoolService.saveSchool(schoolVO);
+        return ApiResponse.success(schoolDTO);
+    }
 }
