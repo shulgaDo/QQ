@@ -14,12 +14,17 @@ import com.qq.code.utils.BeanCopyUtil;
 import com.qq.code.utils.CurrentUserUtil;
 import com.qq.code.utils.ZodiacUtil;
 import com.qq.code.vo.CoverInfoVO;
+import com.qq.code.vo.StatusInfoVO;
 import com.qq.code.vo.UserInfoVO;
 import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Optional;
 
@@ -77,6 +82,19 @@ public class UserInfoServiceImpl implements UserInfoService {
         UserInfo info = userInfoRepository.save(userInfo);
         UserInfoDTO userInfoDTO = modelMapper.map(info, UserInfoDTO.class);
         return userInfoDTO;
+    }
+
+    @Override
+    public StatusInfoVO getStatusInfo() {
+        UserInfo userInfo = showUserInfo();
+        User user = CurrentUserUtil.getCurrentUser();
+        StatusInfoVO statusInfoVO = modelMapper.map(userInfo, StatusInfoVO.class);
+        Instant createdAt   = user.getCreatedAt();
+        LocalDate loginDay = createdAt.atZone(ZoneId.systemDefault()).toLocalDate();
+        int day =(int) ChronoUnit.DAYS.between(loginDay, LocalDate.now());
+        int rank = day / 20;
+        statusInfoVO.setRank(rank);
+        return statusInfoVO;
     }
 
     private UserInfo showUserInfo(){

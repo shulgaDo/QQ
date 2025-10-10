@@ -2,6 +2,7 @@ package com.qq.code.service;
 
 import com.qq.code.dto.UserInfoDTO;
 import com.qq.code.vo.CoverInfoVO;
+import com.qq.code.vo.StatusInfoVO;
 import com.qq.code.vo.UserInfoVO;
 
 public interface UserInfoService {
@@ -10,4 +11,6 @@ public interface UserInfoService {
     UserInfoVO getUserInfo();
 
     UserInfoDTO updateUserInfo(UserInfoVO userInfoVO);
+
+    StatusInfoVO getStatusInfo();
 }

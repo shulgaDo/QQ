@@ -8,10 +8,7 @@ import com.qq.code.dto.UserInfoDTO;
 import com.qq.code.service.InfoPhotoService;
 import com.qq.code.service.SchoolService;
 import com.qq.code.service.UserInfoService;
-import com.qq.code.vo.CoverInfoVO;
-import com.qq.code.vo.SchoolVO;
-import com.qq.code.vo.UniversityVO;
-import com.qq.code.vo.UserInfoVO;
+import com.qq.code.vo.*;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
@@ -52,6 +49,17 @@ public class UserInfoController {
     }
 
     /**
+     * 点击显示左侧用户状态信息
+     * @return
+     */
+    @Operation(summary = "left status info",description = "click left show user status info")
+    @GetMapping("/show/status")
+    public ApiResponse<StatusInfoVO>  statusInfo(){
+        StatusInfoVO statusInfoVO = userInfoService.getStatusInfo();
+        return ApiResponse.success(statusInfoVO);
+    }
+
+    /**
      * 编辑资料
       * @param userInfoVO
      * @return
@@ -75,7 +83,11 @@ public class UserInfoController {
         return ApiResponse.success(universityDTO);
     }
 
-
+    /**
+     * 添加中学或者小学
+     * @param schoolVO
+     * @return
+     */
     @Operation(summary = "save school", description = "user save school")
     @PostMapping("/school")
     public ApiResponse saveSchool(@RequestBody @Valid SchoolVO schoolVO){
