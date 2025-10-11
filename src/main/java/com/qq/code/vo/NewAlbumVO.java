@@ -1,27 +1,30 @@
 package com.qq.code.vo;
 
+import jakarta.validation.constraints.Size;
+
 public class NewAlbumVO {
 
-    private String albumName;
+    @Size(min = 1,max = 10,message = "相册名称在1~10之间")
+    private String albumDescribe;
 
-    private Integer permission;
+    private Integer albumStatus;
 
     private Integer personalTitle;
 
-    public String getAlbumName() {
-        return albumName;
+    public String getAlbumDescribe() {
+        return albumDescribe;
     }
 
-    public void setAlbumName(String albumName) {
-        this.albumName = albumName;
+    public void setAlbumDescribe(String albumDescribe) {
+        this.albumDescribe = albumDescribe;
     }
 
-    public Integer getPermission() {
-        return permission;
+    public Integer getAlbumStatus() {
+        return albumStatus;
     }
 
-    public void setPermission(Integer permission) {
-        this.permission = permission;
+    public void setAlbumStatus(Integer albumStatus) {
+        this.albumStatus = albumStatus;
     }
 
     public Integer getPersonalTitle() {

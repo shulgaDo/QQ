@@ -18,8 +18,8 @@ public class AlbumPhoto {
     @Column(name = "id", nullable = false)
     private Long id;
 
-//    @Column(name = "album_id")
-//    private Long albumId;
+    @Column(name = "album_id")
+    private Long albumId;
 
     @Column(name = "upload_time")
     private LocalDate uploadTime;
@@ -32,18 +32,18 @@ public class AlbumPhoto {
     @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate createAt;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "album_id",nullable = false)
-    @JsonBackReference
-    private UserAlbum userAlbum;
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "album_id",nullable = false)
+//    @JsonBackReference
+//    private UserAlbum userAlbum;
 
-    public UserAlbum getUserAlbum() {
-        return userAlbum;
-    }
-
-    public void setUserAlbum(UserAlbum userAlbum) {
-        this.userAlbum = userAlbum;
-    }
+//    public UserAlbum getUserAlbum() {
+//        return userAlbum;
+//    }
+//
+//    public void setUserAlbum(UserAlbum userAlbum) {
+//        this.userAlbum = userAlbum;
+//    }
 
     public Long getId() {
         return id;
@@ -53,13 +53,13 @@ public class AlbumPhoto {
         this.id = id;
     }
 
-//    public Long getAlbumId() {
-//        return albumId;
-//    }
-//
-//    public void setAlbumId(Long albumId) {
-//        this.albumId = albumId;
-//    }
+    public Long getAlbumId() {
+        return albumId;
+    }
+
+    public void setAlbumId(Long albumId) {
+        this.albumId = albumId;
+    }
 
     public LocalDate getUploadTime() {
         return uploadTime;

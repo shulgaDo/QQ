@@ -39,16 +39,16 @@ public class UserAlbum {
     @Column(name = "is_deleted")
     private Integer isDeleted;
 
-    @OneToMany(mappedBy = "album",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
-    private List<AlbumPhoto> photos;
+//    @OneToMany(mappedBy = "album",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+//    private List<AlbumPhoto> photos;
 
-    public List<AlbumPhoto> getPhotos() {
-        return photos;
-    }
-
-    public void setPhotos(List<AlbumPhoto> photos) {
-        this.photos = photos;
-    }
+//    public List<AlbumPhoto> getPhotos() {
+//        return photos;
+//    }
+//
+//    public void setPhotos(List<AlbumPhoto> photos) {
+//        this.photos = photos;
+//    }
 
     public Long getId() {
         return id;
