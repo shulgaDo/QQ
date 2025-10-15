@@ -1,3 +1,9 @@
+### 做一个类似QQ的项目，使用的技术栈有
+* SpringBoot
+* MySQL
+* Spring Data JPA
+* Redis
+* 
 # 数据库表设计
 
 ## user(用户表)
