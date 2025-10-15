@@ -3,12 +3,12 @@ package com.qq.code.controller;
 import com.qq.code.common.ApiResponse;
 import com.qq.code.dto.AlbumDTO;
 import com.qq.code.dto.PhotosStatusDTO;
+import com.qq.code.entity.AlbumComment;
+import com.qq.code.request.AlbumCommentRequest;
 import com.qq.code.request.RecycleLoginRequest;
 import com.qq.code.service.AlbumService;
-import com.qq.code.vo.AlbumVO;
-import com.qq.code.vo.NewAlbumVO;
-import com.qq.code.vo.PhotoVO;
-import com.qq.code.vo.RecyclePhotoVO;
+import com.qq.code.utils.AssertUtil;
+import com.qq.code.vo.*;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
@@ -111,6 +111,44 @@ public class AlbumController {
     public ApiResponse<PhotosStatusDTO> restoreRecycle(@RequestParam List<Long> ids){
         List<PhotosStatusDTO> photosStatusDTOList = albumService.restoreRecycle(ids);
         return ApiResponse.success(photosStatusDTOList);
+    }
+
+    /**
+     * 添加相册评论
+      * @param albumComment
+     * @return
+     */
+    @Operation(summary = "add album comment",description = "into album to add comment")
+    @PostMapping("/comment")
+    public ApiResponse<AlbumCommentVO> addAlbumComment(@RequestBody AlbumCommentRequest albumComment){
+        AlbumCommentVO albumCommentVO = albumService.addAlbumComment(albumComment);
+        return ApiResponse.success(albumCommentVO);
+    }
+
+    /**
+     * 获取所以用户评论
+      * @return
+     */
+    @Operation(summary = "get all album comment", description = "get all comments from album")
+    @GetMapping("/get/comment/{albumId}")
+    public ApiResponse<List<AlbumCommentVO>> getAllAlbumComment(@PathVariable Long albumId){
+        List<AlbumCommentVO> albumCommentVOS = albumService.getAlbumComment(albumId);
+        return ApiResponse.success(albumCommentVOS);
+    }
+
+    /**
+     * 删除评论
+      * @param commentId
+     * @return
+     */
+    @Operation(summary = "delete album comment",description = "delete album photo comment")
+    @DeleteMapping("/delete/comment/{commentId}")
+    public ApiResponse deleteAlbumComment(@PathVariable Long commentId){
+       int i = albumService.deleteAlbumComment(commentId);
+       if(i != 1){
+           AssertUtil.isError(true,"删除评论失败");
+       }
+       return ApiResponse.success("删除评论成功");
     }
 
 

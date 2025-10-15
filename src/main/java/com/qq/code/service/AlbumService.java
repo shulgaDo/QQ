@@ -2,10 +2,8 @@ package com.qq.code.service;
 
 import com.qq.code.dto.AlbumDTO;
 import com.qq.code.dto.PhotosStatusDTO;
-import com.qq.code.vo.AlbumVO;
-import com.qq.code.vo.NewAlbumVO;
-import com.qq.code.vo.PhotoVO;
-import com.qq.code.vo.RecyclePhotoVO;
+import com.qq.code.request.AlbumCommentRequest;
+import com.qq.code.vo.*;
 
 import java.util.List;
 import java.util.Map;
@@ -24,4 +22,10 @@ public interface AlbumService {
     int deleteRecyclePhotos(List<Long> ids);
 
     List<PhotosStatusDTO> restoreRecycle(List<Long> ids);
+
+    AlbumCommentVO addAlbumComment(AlbumCommentRequest albumComment);
+
+    List<AlbumCommentVO> getAlbumComment(Long albumId);
+
+    int deleteAlbumComment(Long commentId);
 }

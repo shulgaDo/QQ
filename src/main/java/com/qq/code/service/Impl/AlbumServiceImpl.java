@@ -2,21 +2,15 @@ package com.qq.code.service.Impl;
 
 import com.qq.code.dto.AlbumDTO;
 import com.qq.code.dto.PhotosStatusDTO;
-import com.qq.code.entity.AlbumPhoto;
-import com.qq.code.entity.User;
-import com.qq.code.entity.UserAlbum;
+import com.qq.code.entity.*;
 import com.qq.code.enums.AlbumPermissEnum;
-import com.qq.code.repository.AlbumPhotoRepository;
-import com.qq.code.repository.AlbumRecycleRepository;
-import com.qq.code.repository.UserAlbumRepository;
+import com.qq.code.repository.*;
+import com.qq.code.request.AlbumCommentRequest;
 import com.qq.code.service.AlbumService;
 import com.qq.code.utils.AssertUtil;
 import com.qq.code.utils.CurrentUserUtil;
 import com.qq.code.utils.EnumUtil;
-import com.qq.code.vo.AlbumVO;
-import com.qq.code.vo.NewAlbumVO;
-import com.qq.code.vo.PhotoVO;
-import com.qq.code.vo.RecyclePhotoVO;
+import com.qq.code.vo.*;
 import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,6 +34,12 @@ public class AlbumServiceImpl implements AlbumService {
 
     @Autowired
     private AlbumRecycleRepository recycleRepository;
+
+    @Autowired
+    private AlbumCommentRepository commentRepository;
+
+    @Autowired
+    private UserInfoRepository userInfoRepository;
 
     @Autowired
     private ModelMapper modelMapper;
@@ -137,5 +137,39 @@ public class AlbumServiceImpl implements AlbumService {
                     return modelMapper.map(photo, PhotosStatusDTO.class);
                 }).toList();
         return photoStatusDTO;
+    }
+
+    @Override
+    public AlbumCommentVO addAlbumComment(AlbumCommentRequest albumComment) {
+        Long userId = albumComment.getUserId();
+        UserInfo userInfo = userInfoRepository.findById(userId).get();
+        String avatar = userInfo.getAvatar();
+        String nickname = userInfo.getNickname();
+        AlbumComment comment = modelMapper.map(albumComment, AlbumComment.class);
+        comment.setAvatar(avatar);
+        comment.setNickname(nickname);
+        comment.setCreateAt(LocalDateTime.now());
+        comment.setCommentTime(LocalDateTime.now());
+        commentRepository.save(comment);
+        AlbumCommentVO albumCommentVO = modelMapper.map(comment, AlbumCommentVO.class);
+        albumCommentVO.setCommentTime(LocalDateTime.now());
+        return albumCommentVO;
+    }
+
+    @Override
+    public List<AlbumCommentVO> getAlbumComment(Long albumId) {
+        List<AlbumComment> albumComments = commentRepository.findAllByAlbumId(albumId);
+        List<AlbumCommentVO> albumCommentVOs = albumComments.stream()
+                .map(comment -> {
+                    AlbumCommentVO albumCommentVO = modelMapper.map(comment, AlbumCommentVO.class);
+                    return albumCommentVO;
+                }).toList();
+        return albumCommentVOs;
+    }
+
+    @Override
+    public int deleteAlbumComment(Long commentId) {
+        commentRepository.deleteById(commentId);
+        return 1;
     }
 }
