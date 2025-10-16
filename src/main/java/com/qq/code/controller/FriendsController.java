@@ -56,4 +56,6 @@ public class FriendsController {
         Map<String,List<FriendStatusVO>> vo = friendService.getFriendStatusSortByInitial();
         return ApiResponse.success(vo);
     }
+
+
 }

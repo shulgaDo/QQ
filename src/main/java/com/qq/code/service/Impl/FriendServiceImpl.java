@@ -3,6 +3,7 @@ package com.qq.code.service.Impl;
 import com.qq.code.dto.FriendGroupDTO;
 import com.qq.code.entity.UserFriend;
 import com.qq.code.entity.UserInfo;
+import com.qq.code.entity.UserStatus;
 import com.qq.code.enums.UserStatusEnum;
 import com.qq.code.repository.UserFriendRepository;
 import com.qq.code.repository.UserInfoRepository;
@@ -19,9 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -75,7 +74,9 @@ public class FriendServiceImpl implements FriendService {
                 .map(friend -> {
                     UserInfo userInfo = userInfoRepository.findById(friend.getFriendId()).get();
                     FriendStatusVO friendStatusVO = modelMapper.map(userInfo, FriendStatusVO.class);
-                    Integer userStatus = userStatusRepository.findById(friend.getFriendId()).get().getUserStatus();
+                    Long userId = friend.getFriendId();
+                    Optional<UserStatus> optionalUserStatus= userStatusRepository.findByUserId(userId);
+                    Integer userStatus = optionalUserStatus.get().getUserStatus();
                     String status = EnumUtil.getByCode(UserStatusEnum.class, userStatus).getName();
                     friendStatusVO.setNickname(friend.getRemark());
                     friendStatusVO.setUserStatus(status);
@@ -83,24 +84,41 @@ public class FriendServiceImpl implements FriendService {
                 })
                 .filter(vo -> vo.getNickname() != null && !vo.getNickname().isEmpty())
                 .collect(Collectors.groupingBy(
-                        vo -> getInitial(vo.getNickname()),
+                        vo -> {
+                            String initial = getInitial(vo.getNickname());
+                            return initial.matches("[A-Z]") ? initial : "#";
+                        },
                         TreeMap::new,
                         Collectors.toList()
                 ));
         return result;
     }
 
-    private String getInitial(String nickname){
-    // 取首个字符
-        char firstChar = nickname.trim().charAt(0);
-
-        // 如果是英文
-        if (Character.isLetter(firstChar)) {
-            return String.valueOf(Character.toUpperCase(firstChar));
+    private String getInitial(String nickname) {
+        if (nickname == null || nickname.isEmpty()) {
+            return "#";
         }
-
-        // 如果是中文，转换为拼音首字母
-        String pinyin = PinyinHelper.toHanyuPinyinStringArray(firstChar)[0];
-        return pinyin.substring(0, 1).toUpperCase();
+        char firstChar = nickname.trim().charAt(0);
+        // 尝试中文转拼音
+        try {
+            String[] pinyinArray = PinyinHelper.toHanyuPinyinStringArray(firstChar);
+            if (pinyinArray != null && pinyinArray.length > 0) {
+                // 去掉声调数字，例如 "liu2" → "liu"
+                String pinyin = pinyinArray[0].replaceAll("[^a-zA-Z]", "");
+                return pinyin.substring(0, 1).toUpperCase();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        // 其他情况
+        return "#";
     }
+
+    public static void main(String[] args) {
+        char ch = '刘';
+        String[] arr = PinyinHelper.toHanyuPinyinStringArray(ch);
+        System.out.println(Arrays.toString(arr));
+    }
+
+
 }
