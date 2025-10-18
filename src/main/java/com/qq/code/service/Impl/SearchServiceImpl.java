@@ -1,16 +1,23 @@
 package com.qq.code.service.Impl;
 
+import com.qq.code.dto.AddFriendApplyDTO;
+import com.qq.code.entity.AddFriendApply;
 import com.qq.code.entity.User;
 import com.qq.code.entity.UserInfo;
+import com.qq.code.events.event.AddFriendEvent;
+import com.qq.code.repository.AddFriendApplyRepository;
 import com.qq.code.repository.UserInfoRepository;
 import com.qq.code.repository.UserRepository;
 import com.qq.code.service.SearchService;
+import com.qq.code.utils.CurrentUserUtil;
 import com.qq.code.utils.ZodiacUtil;
+import com.qq.code.vo.AddFriendApplyVO;
 import com.qq.code.vo.NewFriendVO;
 import com.qq.code.vo.SearchFriendVO;
 import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -24,11 +31,13 @@ import java.util.Optional;
 public class SearchServiceImpl implements SearchService {
 
     @Autowired
-    private UserRepository userRepository;
-
-    @Autowired
     private UserInfoRepository infoRepository;
 
+    @Autowired
+    private ApplicationEventPublisher publisher;
+
+    @Autowired
+    private AddFriendApplyRepository applyRepository;
 
     @Autowired
     private ModelMapper modelMapper;
@@ -60,5 +69,19 @@ public class SearchServiceImpl implements SearchService {
                     return vo;
                 }).toList();
         return vos;
+    }
+
+    @Override
+    public AddFriendApplyDTO addFriend(AddFriendApplyVO addFriendApplyVO) {
+        AddFriendApply apply = modelMapper.map(addFriendApplyVO, AddFriendApply.class);
+        String userAccount = CurrentUserUtil.getCurrentUser().getAccount();
+        apply.setUserAccount(userAccount);
+        apply.setFriendAccount(addFriendApplyVO.getAccount());
+        apply.setFriendGroup(addFriendApplyVO.getGroupId());
+        AddFriendApplyDTO dto = modelMapper.map(addFriendApplyVO, AddFriendApplyDTO.class);
+        dto.setCreateAt(LocalDateTime.now());
+        applyRepository.save(apply);
+        publisher.publishEvent(new AddFriendEvent(this,addFriendApplyVO));
+        return dto;
     }
 }

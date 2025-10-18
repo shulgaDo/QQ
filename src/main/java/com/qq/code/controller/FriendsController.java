@@ -5,6 +5,7 @@ import com.qq.code.common.ApiResponse;
 import com.qq.code.dto.FriendGroupDTO;
 import com.qq.code.request.NewFriendGroupRequest;
 import com.qq.code.service.FriendService;
+import com.qq.code.utils.AssertUtil;
 import com.qq.code.vo.FriendStatusVO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -55,6 +56,21 @@ public class FriendsController {
     public ApiResponse<Map<String,List<FriendStatusVO>>> getFriendStatusSortByInitial(){
         Map<String,List<FriendStatusVO>> vo = friendService.getFriendStatusSortByInitial();
         return ApiResponse.success(vo);
+    }
+
+    /**
+     * 删除好友
+     * @param friendId
+     * @return
+     */
+    @Operation(summary = "delete friend", description = "delete friend by friend id")
+    @DeleteMapping("/delete/{friendId}")
+    public ApiResponse deleteFriend(@PathVariable Long friendId){
+        int i = friendService.deleteFriend(friendId);
+        if(i != 1){
+            AssertUtil.isError(true,"删除好友失败");
+        }
+        return ApiResponse.success("删除好友成功");
     }
 
 

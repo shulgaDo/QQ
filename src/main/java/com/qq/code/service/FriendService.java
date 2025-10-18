@@ -13,4 +13,6 @@ public interface FriendService {
     FriendGroupDTO updateFriendGroup(NewFriendGroupRequest request);
 
     Map<String, List<FriendStatusVO>> getFriendStatusSortByInitial();
+
+    int deleteFriend(Long friendId);
 }

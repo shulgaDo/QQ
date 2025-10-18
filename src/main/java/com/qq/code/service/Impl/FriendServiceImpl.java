@@ -94,6 +94,12 @@ public class FriendServiceImpl implements FriendService {
         return result;
     }
 
+    @Override
+    public int deleteFriend(Long friendId) {
+        friendRepository.deleteById(friendId);
+        return 1;
+    }
+
     private String getInitial(String nickname) {
         if (nickname == null || nickname.isEmpty()) {
             return "#";

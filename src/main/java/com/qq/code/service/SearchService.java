@@ -1,5 +1,7 @@
 package com.qq.code.service;
 
+import com.qq.code.dto.AddFriendApplyDTO;
+import com.qq.code.vo.AddFriendApplyVO;
 import com.qq.code.vo.NewFriendVO;
 import com.qq.code.vo.SearchFriendVO;
 
@@ -9,4 +11,6 @@ public interface SearchService {
     SearchFriendVO findFriendByAccount(String account);
 
     List<NewFriendVO> findFriendByNickname(String nickname);
+
+    AddFriendApplyDTO addFriend(AddFriendApplyVO addFriendApplyVO);
 }

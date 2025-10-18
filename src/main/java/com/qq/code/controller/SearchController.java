@@ -1,16 +1,15 @@
 package com.qq.code.controller;
 
 import com.qq.code.common.ApiResponse;
+import com.qq.code.dto.AddFriendApplyDTO;
 import com.qq.code.service.SearchService;
+import com.qq.code.vo.AddFriendApplyVO;
 import com.qq.code.vo.NewFriendVO;
 import com.qq.code.vo.SearchFriendVO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -44,6 +43,20 @@ public class SearchController {
     public ApiResponse<List<NewFriendVO>> searchFriend(@RequestParam String nickname){
         List<NewFriendVO> newFriendVOS = searchService.findFriendByNickname(nickname);
         return ApiResponse.success(newFriendVOS);
+    }
+
+
+    /**
+     * 添加好友
+      * @param addFriendApplyVO
+     * @return
+     */
+    @Operation(summary = "add friend" , description = "add friend by account or nickname")
+    @PostMapping("/add/friend")
+    public ApiResponse<AddFriendApplyDTO> addFriend(@RequestBody AddFriendApplyVO addFriendApplyVO){
+          //TODO 这里结构不清晰，功能不完善
+          AddFriendApplyDTO addFriendDTO = searchService.addFriend(addFriendApplyVO);
+          return ApiResponse.success(addFriendDTO);
     }
 
 }
